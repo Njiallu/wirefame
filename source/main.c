@@ -6,7 +6,7 @@
 /*   By: mbeilles </var/mail/mbeilles>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/08 11:07:40 by mbeilles          #+#    #+#             */
-/*   Updated: 2018/04/10 15:44:29 by mbeilles         ###   ########.fr       */
+/*   Updated: 2018/04/10 17:21:04 by mbeilles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,16 @@ int						main(int c, char **v)
 
 	SDL_Init(SDL_INIT_VIDEO);
 
-	window = SDL_CreateWindow(
+	if ((window = SDL_CreateWindow(
 			"An SDL2 window",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
 			1920,
 			1080,
-			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN |
-			SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED |
-			SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS
-			);
-
-	if (window == NULL) {
+			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
+			| SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED
+			//| SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS
+			)) == NULL) {
 		printf("Could not create window: %s\n", SDL_GetError());
 		return 1;
 	}

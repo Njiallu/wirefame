@@ -6,11 +6,12 @@
 /*   By: mbeilles </var/mail/mbeilles>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 13:21:55 by mbeilles          #+#    #+#             */
-/*   Updated: 2018/04/10 15:45:04 by mbeilles         ###   ########.fr       */
+/*   Updated: 2018/04/10 16:42:11 by mbeilles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cli.h"
+#include "wireframe.h"
 #include "libft.h"
 
 static inline uint32_t			get_param_number(char *str)
@@ -63,7 +64,6 @@ static inline t_cli_command		parse_cli_command(char *str, uint32_t len)
 	i = 0;
 	cmd.command = get_param(&str, &found);
 	cmd.param_number = get_param_number(str);
-	printf("Params number%d\n", cmd.param_number);
 	if (!(cmd.param = (t_cli_param*)malloc(sizeof(t_cli_param) * cmd.param_number)))
 		exit(EXIT_FAILURE);
 	while ((param = get_param(&str, &found)), found && i < cmd.param_number)
@@ -86,10 +86,10 @@ void					print_cli_command(t_cli_command cmd)
 {
 	uint32_t			i;
 
-	printf("cmd : \'%.*s\', params [%d]:", cmd.command.len, cmd.command.param, cmd.param_number);
+	printf(STR_INF("Command issued > \'%.*s\' [%d]:"), cmd.command.len, cmd.command.param, cmd.param_number);
 	i = ~0U;
 	while(++i < cmd.param_number)
-		printf(" \'%.*s\'", cmd.param[i].len, cmd.param[i].param);
+		printf(C_MGR" \'%.*s\'"C_NRM, cmd.param[i].len, cmd.param[i].param);
 	printf("\n");
 }
 
