@@ -6,7 +6,7 @@
 /*   By: mbeilles </var/mail/mbeilles>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 13:21:55 by mbeilles          #+#    #+#             */
-/*   Updated: 2018/04/10 16:42:11 by mbeilles         ###   ########.fr       */
+/*   Updated: 2018/04/10 23:05:05 by mbeilles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,34 +67,34 @@ static inline t_cli_command		parse_cli_command(char *str, uint32_t len)
 	if (!(cmd.param = (t_cli_param*)malloc(sizeof(t_cli_param) * cmd.param_number)))
 		exit(EXIT_FAILURE);
 	while ((param = get_param(&str, &found)), found && i < cmd.param_number)
-	{
-		cmd.param[i] = param;
-		++i;
-	}
+		cmd.param[i++] = param;
 	return (cmd);
 }
 
-t_cli_command			get_cli_command(void)
+t_cli_command					get_cli_command(void)
 {
-	char				*str;
+	char						*str;
 
 	while (get_next_line(0, &str) <= 0);
 	return (parse_cli_command(str, ft_strlen(str)));
 }
 
-void					print_cli_command(t_cli_command cmd)
+void							print_cli_command(t_cli_command cmd)
 {
-	uint32_t			i;
+	uint32_t				i;
 
-	printf(STR_INF("Command issued > \'%.*s\' [%d]:"), cmd.command.len, cmd.command.param, cmd.param_number);
+	printf(STR_INF("Command issued > \'%.*s\' [%d]:"), cmd.command.len
+								, cmd.command.param, cmd.param_number);
 	i = ~0U;
 	while(++i < cmd.param_number)
 		printf(C_MGR" \'%.*s\'"C_NRM, cmd.param[i].len, cmd.param[i].param);
 	printf("\n");
 }
 
-void					destroy_cli_command(t_cli_command cmd)
+void							destroy_cli_command(t_cli_command cmd)
 {
 	free(cmd.str);
 	free(cmd.param);
 }
+
+void							display_cli_prompt
