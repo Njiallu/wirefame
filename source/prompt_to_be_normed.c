@@ -6,23 +6,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-typedef struct				s_command_head {
-	char					*str;
-	uint32_t				length;
-}							t_command_head;
-
-typedef struct				s_command_arg {
-	char					*str;
-	uint32_t				length;
-	struct s_command_arg	*next;
-}							t_command_arg;
-
-typedef struct				s_command {
-	char					*original_str;
-	t_command_head			head;
-	t_command_arg			*args;
-	uint32_t				arg_number;
-}							t_command;
+#include "prompt.h"
 
 t_command_head		parse_command_head(char *str, char **end)
 {
