@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt_to_be_normed.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbeilles <mbeilles@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/19 10:10:37 by mbeilles          #+#    #+#             */
+/*   Updated: 2018/07/19 10:17:54 by mbeilles         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,6 +23,7 @@
 /*
 ** Parses only the head of the command (not the first argument)
 */
+
 t_command_head		parse_command_head(char *str, char **end)
 {
 	t_command_head	head;
@@ -34,6 +47,7 @@ t_command_head		parse_command_head(char *str, char **end)
 /*
 ** Creates a new arg node.
 */
+
 t_command_arg		*create_command_arg(char *str, uint32_t length)
 {
 	t_command_arg	*arg;
@@ -52,7 +66,8 @@ t_command_arg		*create_command_arg(char *str, uint32_t length)
 ** 		Then procedes to count the number of char. And returns the start of
 ** 		the arg linked list.
 */
-t_command_arg		*parse_command_arg(char *str, char **end, int *nbr)
+
+t_command_arg		*parse_command_arg(char *str, char **end, uint32_t *nbr)
 {
 	t_command_arg	*tmp_arg;
 	t_command_arg	*last_arg;
@@ -93,13 +108,13 @@ t_command_arg		*parse_command_arg(char *str, char **end, int *nbr)
 ** 		Str  -> string used to generate and is pointed by head and args.
 ** 		Nbr  -> number of args in the command;
 */
+
 t_command			parse_command(char *str)
 {
-	t_command		cmd = (t_command){str, (t_command_head){NULL, 0}, NULL, 0};
+	t_command		cmd;
 
-	// Getting Header
+	cmd = (t_command){str, (t_command_head){NULL, 0}, NULL, 0};
 	cmd.head = parse_command_head(str, &str);
-	// Getting arguments
 	cmd.args = parse_command_arg(str, &str, &cmd.arg_number);
 	return (cmd);
 }
@@ -107,11 +122,12 @@ t_command			parse_command(char *str)
 /*
 ** Print command data
 */
+
 void				print_command(t_command cmd)
 {
 	t_command_arg	*arg;
 
-	printf("original cmd: \'%s\'\ncommand name: %.*s\n % 4d args\n"
+	printf("original cmd: \'%s\'\ncommand name: %.*s - % 2d args\n"
 			, cmd.original_str, cmd.head.length, cmd.head.str, cmd.arg_number);
 	arg = cmd.args;
 	while (arg)
@@ -124,14 +140,14 @@ void				print_command(t_command cmd)
 
 /*
 ** Wow such comments needed. Nice.
+** int					main(void)
+** {
+** 	char			*input;
+** 	t_command		cmd;
+**
+** 	input = readline("Command tester v0.75.1 $ ");
+** 	cmd = parse_command(input);
+** 	print_command(cmd);
+** 	return (0);
+** }
 */
-int					main (void) {
-
-	char			*input;
-	t_command		cmd;
-
-	input = readline("Command tester v0.75.1");
-	cmd = parse_command(input);
-	print_command(cmd);
-	return 0;
-}

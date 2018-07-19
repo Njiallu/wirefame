@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbeilles </var/mail/mbeilles>              +#+  +:+       +#+        */
+/*   By: mbeilles <mbeilles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 13:25:53 by mbeilles          #+#    #+#             */
-/*   Updated: 2018/07/19 09:18:01 by mbeilles         ###   ########.fr       */
+/*   Updated: 2018/07/19 10:15:46 by mbeilles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct				s_command {
 */
 
 t_command_arg		*create_command_arg(char *str, uint32_t length);
-t_command_arg		*parse_command_arg(char *str, char **end, int *nbr);
+t_command_arg		*parse_command_arg(char *str, char **end, uint32_t *nbr);
 t_command_head		parse_command_head(char *str, char **end);
 t_command			parse_command(char *str);
 void				print_command(t_command cmd);
