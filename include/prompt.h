@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cli.h                                              :+:      :+:    :+:   */
+/*   prompt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbeilles </var/mail/mbeilles>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 13:25:53 by mbeilles          #+#    #+#             */
-/*   Updated: 2018/04/10 15:39:51 by mbeilles         ###   ########.fr       */
+/*   Updated: 2018/07/19 09:18:01 by mbeilles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,44 @@
 # define CLI_H
 
 # include <stdint.h>
+# include <stdlib.h>
 
-typedef struct		s_cli_param
-{
-	char			*param;
-	uint32_t		len;
-}					t_cli_param;
+typedef struct				s_command_head {
+	char					*str;
+	uint32_t				length;
+}							t_command_head;
 
-typedef struct		s_cli_command
-{
-	char			*str;
-	t_cli_param		command;
-	t_cli_param		*param;
-	uint32_t		param_number;
-}					t_cli_command;
+typedef struct				s_command_arg {
+	char					*str;
+	uint32_t				length;
+	struct s_command_arg	*next;
+}							t_command_arg;
 
-t_cli_command		get_cli_command();
-void				destroy_cli_command();
+typedef struct				s_command {
+	char					*original_str;
+	t_command_head			head;
+	t_command_arg			*args;
+	uint32_t				arg_number;
+}							t_command;
 
-void				print_cli_command(t_cli_command cmd);
+/*
+** Usage of this short lib:
+**
+**	// Display the prompt and read the input
+**	char *input = readline("Command tester v0.75.1");
+**
+**	// Ingest and parse the input
+**	t_command cmd = parse_command(input);
+**
+**	// Use the input to print the command debug
+**	print_command(cmd);
+**
+*/
+
+t_command_arg		*create_command_arg(char *str, uint32_t length);
+t_command_arg		*parse_command_arg(char *str, char **end, int *nbr);
+t_command_head		parse_command_head(char *str, char **end);
+t_command			parse_command(char *str);
+void				print_command(t_command cmd);
 
 #endif
